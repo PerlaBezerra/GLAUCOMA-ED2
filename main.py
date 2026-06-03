@@ -16,7 +16,7 @@ from avl import AVL
 
 pacientes = []
 
-for imagem in os.listdir("images") [:100]:
+for imagem in os.listdir("images") :
 
     if imagem.endswith(".jpg"):
 
