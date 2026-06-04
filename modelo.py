@@ -48,10 +48,18 @@ model.head.fc = torch.nn.Sequential(
 # =========================
 
 state_dict = torch.load(
+<<<<<<< HEAD
     WEIGHTS_PATH,
     map_location=DEVICE,
     weights_only=False
 )
+=======
+
+    WEIGHTS_PATH,
+    map_location=DEVICE
+)
+
+>>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
 model.load_state_dict(
 
     state_dict,
