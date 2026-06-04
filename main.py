@@ -2,10 +2,6 @@ import os
 import time
 
 from modelo import predict
-<<<<<<< HEAD
-=======
-
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
 from paciente import Paciente
 
 from heap_maxima import HeapMaxima
@@ -14,237 +10,127 @@ from avl import AVL
 
 
 # =========================
-<<<<<<< HEAD
-# CARREGAR PACIENTES
-=======
-# gerar pacientes
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
+# FUNÇÃO DE RISCO
 # =========================
+def classificar_risco(score):
+    if score <= 0.33:
+        return "RISCO BAIXO"
+    elif score <= 0.66:
+        return "RISCO MÉDIO"
+    else:
+        return "RISCO ALTO"
 
+
+# =========================
+# CARREGAR PACIENTES
+# =========================
 pacientes = []
 
-<<<<<<< HEAD
 for imagem in os.listdir("images"):
-=======
-for imagem in os.listdir("images") :
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
-
     if imagem.endswith(".jpg"):
 
         caminho = f"images/{imagem}"
-
         pred = predict(caminho)
 
         score = float(pred[0])
 
-<<<<<<< HEAD
-        paciente = Paciente(imagem, score)
+        pacientes.append(Paciente(imagem, score))
 
-        pacientes.append(paciente)
-
-=======
-        paciente = Paciente(
-
-            imagem,
-            score
-    )
-
-        pacientes.append(paciente)
-
-
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
 print(f"Pacientes carregados: {len(pacientes)}")
 
 
 # =========================
-<<<<<<< HEAD
-# HEAP (ORGANIZAÇÃO)
-=======
 # HEAP
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
 # =========================
-
 heap = HeapMaxima()
 
 inicio = time.time()
-
-for paciente in pacientes:
-<<<<<<< HEAD
-=======
-
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
-    heap.inserir(paciente)
-
-fim = time.time()
-
-<<<<<<< HEAD
-tempo_heap_org = fim - inicio
-
-
-# =========================
-# ABB (ORGANIZAÇÃO)
-=======
-tempo_heap = fim - inicio
+for p in pacientes:
+    heap.inserir(p)
+tempo_heap_org = time.time() - inicio
 
 
 # =========================
 # ABB
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
 # =========================
-
 abb = ABB()
 
 inicio = time.time()
-
-for paciente in pacientes:
-<<<<<<< HEAD
-=======
-
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
-    abb.inserir(paciente)
-
-fim = time.time()
-
-<<<<<<< HEAD
-tempo_abb_org = fim - inicio
-
-
-# =========================
-# AVL (ORGANIZAÇÃO)
-=======
-tempo_abb = fim - inicio
+for p in pacientes:
+    abb.inserir(p)
+tempo_abb_org = time.time() - inicio
 
 
 # =========================
 # AVL
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
 # =========================
-
 avl = AVL()
 
 inicio = time.time()
-
-for paciente in pacientes:
-<<<<<<< HEAD
-=======
-
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
-    avl.inserir(paciente)
-
-fim = time.time()
-
-<<<<<<< HEAD
-tempo_avl_org = fim - inicio
+for p in pacientes:
+    avl.inserir(p)
+tempo_avl_org = time.time() - inicio
 
 
 # =========================
-# ESCOLHER PACIENTE PARA BUSCA
+# BUSCA
 # =========================
-
-imagem_busca = pacientes[len(pacientes) // 2].id_imagem
-
-
-# =========================
-# BUSCA ABB
-# =========================
+img_busca = pacientes[len(pacientes)//2].id_imagem
 
 inicio = time.time()
-resultado_abb = abb.buscar(imagem_busca)
-fim = time.time()
-tempo_abb_busca = fim - inicio
-
-
-# =========================
-# BUSCA AVL
-# =========================
+abb.buscar(img_busca)
+tempo_busca_abb = time.time() - inicio
 
 inicio = time.time()
-resultado_avl = avl.buscar(imagem_busca)
-fim = time.time()
-tempo_avl_busca = fim - inicio
-
-
-# =========================
-# BUSCA HEAP (LINEAR)
-# =========================
+avl.buscar(img_busca)
+tempo_busca_avl = time.time() - inicio
 
 inicio = time.time()
-
-resultado_heap = None
-
 for p in heap.heap:
-    if p.id_imagem == imagem_busca:
-        resultado_heap = p
+    if p.id_imagem == img_busca:
         break
-
-fim = time.time()
-
-tempo_heap_busca = fim - inicio
+tempo_busca_heap = time.time() - inicio
 
 
 # =========================
 # RESULTADOS
-=======
-tempo_avl = fim - inicio
-
-
 # =========================
-# resultados
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
-# =========================
-
 print("\n===== RESULTADOS =====\n")
 
-<<<<<<< HEAD
 print("HEAP")
+print(f"Tempo inserção: {tempo_heap_org:.6f}")
 print(f"Tempo organização: {tempo_heap_org:.6f}")
-print(f"Tempo busca: {tempo_heap_busca:.6f}")
-print(f"Comparações: {heap.comparacoes}")
-print()
+print(f"Tempo busca: {tempo_busca_heap:.6f}")
+print(f"Comparações: {heap.comparacoes}\n")
 
 print("ABB")
+print(f"Tempo inserção: {tempo_abb_org:.6f}")
 print(f"Tempo organização: {tempo_abb_org:.6f}")
-print(f"Tempo busca: {tempo_abb_busca:.6f}")
+print(f"Tempo busca: {tempo_busca_abb:.6f}")
 print(f"Comparações: {abb.comparacoes}")
-print(f"Altura: {abb.altura()}")
-print()
+print(f"Altura: {abb.altura()}\n")
 
 print("AVL")
+print(f"Tempo inserção: {tempo_avl_org:.6f}")
 print(f"Tempo organização: {tempo_avl_org:.6f}")
-print(f"Tempo busca: {tempo_avl_busca:.6f}")
+print(f"Tempo busca: {tempo_busca_avl:.6f}")
 print(f"Comparações: {avl.comparacoes}")
 print(f"Altura: {avl.altura()}")
-print(f"Rotações: {avl.rotacoes}")
-print()
-=======
-
-print("HEAP")
-
-print(f"Tempo: {tempo_heap:.6f}")
-
-print(f"Comparações: {heap.comparacoes}")
-
-print()
+print(f"Rotações: {avl.rotacoes}\n")
 
 
-print("ABB")
+# =========================
+# FILAS (TOP 10 COM RISCO)
+# =========================
 
-print(f"Tempo: {tempo_abb:.6f}")
+print("\nFILA DE PACIENTES (ABB)")
+for i, p in enumerate(abb.listar_ordenado()[:10], start=1):
+    print(f"{i}. {p.id_imagem} - {p.score:.6f} - {classificar_risco(p.score)}")
 
-print(f"Comparações: {abb.comparacoes}")
+print("\nFILA DE PACIENTES (AVL)")
+for i, p in enumerate(avl.listar_ordenado()[:10], start=1):
+    print(f"{i}. {p.id_imagem} - {p.score:.6f} - {classificar_risco(p.score)}")
 
-print(f"Altura: {abb.altura()}")
-
-print()
-
-
-print("AVL")
-
-print(f"Tempo: {tempo_avl:.6f}")
-
-print(f"Comparações: {avl.comparacoes}")
-
-print(f"Altura: {avl.altura()}")
-
-print(f"Rotações: {avl.rotacoes}")
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
+print("\nFILA DE PACIENTES (HEAP)")
+for i, p in enumerate(heap.listar_ordenado()[:10], start=1):
+    print(f"{i}. {p.id_imagem} - {p.score:.6f} - {classificar_risco(p.score)}")

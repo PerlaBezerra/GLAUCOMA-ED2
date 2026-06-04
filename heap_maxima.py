@@ -1,106 +1,54 @@
+import math
+
 class HeapMaxima:
 
     def __init__(self):
-
         self.heap = []
         self.comparacoes = 0
 
-    # =========================
-    # INSERÇÃO
-    # =========================
     def inserir(self, paciente):
-
         self.heap.append(paciente)
         self._subir(len(self.heap) - 1)
 
-    # =========================
-    # SUBIR (HEAPIFY UP)
-    # =========================
-    def _subir(self, indice):
+    def _subir(self, i):
 
-        while indice > 0:
+        while i > 0:
 
-            pai = (indice - 1) // 2
-
+            pai = (i - 1) // 2
             self.comparacoes += 1
 
-            if self.heap[indice].score > self.heap[pai].score:
-
-                self.heap[indice], self.heap[pai] = (
-                    self.heap[pai],
-                    self.heap[indice]
-                )
-
-                indice = pai
-
+            if self.heap[i].score > self.heap[pai].score:
+                self.heap[i], self.heap[pai] = self.heap[pai], self.heap[i]
+                i = pai
             else:
                 break
 
-    # =========================
-    # REMOÇÃO
-    # =========================
-    def remover_max(self):
-
-        if len(self.heap) == 0:
-            return None
-
-        if len(self.heap) == 1:
-            return self.heap.pop()
-
-        raiz = self.heap[0]
-        self.heap[0] = self.heap.pop()
-
-        self._descer(0)
-
-        return raiz
-
-    # =========================
-    # DESCER (HEAPIFY DOWN)
-    # =========================
-    def _descer(self, indice):
+    def _descer(self, i):
 
         n = len(self.heap)
 
         while True:
 
-            maior = indice
-            esquerda = 2 * indice + 1
-            direita = 2 * indice + 2
+            maior = i
+            e = 2 * i + 1
+            d = 2 * i + 2
 
-            if esquerda < n:
+            if e < n and self.heap[e].score > self.heap[maior].score:
+                maior = e
 
-                self.comparacoes += 1
+            if d < n and self.heap[d].score > self.heap[maior].score:
+                maior = d
 
-                if self.heap[esquerda].score > self.heap[maior].score:
-                    maior = esquerda
-
-            if direita < n:
-
-                self.comparacoes += 1
-
-                if self.heap[direita].score > self.heap[maior].score:
-                    maior = direita
-
-            if maior != indice:
-
-                self.heap[indice], self.heap[maior] = (
-                    self.heap[maior],
-                    self.heap[indice]
-                )
-
-                indice = maior
-
-            else:
+            if maior == i:
                 break
 
-    # =========================
-    # ALTURA
-    # =========================
+            self.heap[i], self.heap[maior] = self.heap[maior], self.heap[i]
+            i = maior
+
+    def listar_ordenado(self):
+        return sorted(self.heap, key=lambda x: x.score, reverse=True)
+
     def altura(self):
-
-        import math
-
-        if len(self.heap) == 0:
+        if not self.heap:
             return 0
-
         return math.floor(math.log2(len(self.heap))) + 1

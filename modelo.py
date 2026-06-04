@@ -21,7 +21,6 @@ WEIGHTS_PATH = "./models/convnext_tiny.pt"
 # =========================
 
 with open(CFG_PATH) as f:
-
     cfg = json.load(f)
 
 
@@ -30,14 +29,12 @@ with open(CFG_PATH) as f:
 # =========================
 
 model = timm.create_model(
-
     cfg["model_name"],
     pretrained=False,
     num_classes=11
 )
 
 model.head.fc = torch.nn.Sequential(
-
     model.head.fc,
     torch.nn.Sigmoid()
 )
@@ -48,20 +45,12 @@ model.head.fc = torch.nn.Sequential(
 # =========================
 
 state_dict = torch.load(
-<<<<<<< HEAD
     WEIGHTS_PATH,
     map_location=DEVICE,
     weights_only=False
 )
-=======
 
-    WEIGHTS_PATH,
-    map_location=DEVICE
-)
-
->>>>>>> e20cc8ef63140f68e9561497dad77d3bd2329e2f
 model.load_state_dict(
-
     state_dict,
     strict=False
 )
@@ -76,15 +65,10 @@ model.eval()
 # =========================
 
 transform = Compose([
-
     Normalize(
-
         mean=[0.485, 0.456, 0.406],
-
         std=[0.229, 0.224, 0.225]
-
     ),
-
     ToTensorV2()
 ])
 
@@ -108,7 +92,6 @@ def predict(image_path):
     tensor = tensor.unsqueeze(0).to(DEVICE)
 
     with torch.no_grad():
-
         pred = model(tensor)
 
     return pred.squeeze().cpu().numpy()
