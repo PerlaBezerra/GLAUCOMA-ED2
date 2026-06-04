@@ -9,9 +9,9 @@ from abb import ABB
 from avl import AVL
 
 
-# =========================
+# ========================
 # FUNÇÃO DE RISCO
-# =========================
+# ========================
 def classificar_risco(score):
     if score <= 0.33:
         return "RISCO BAIXO"
