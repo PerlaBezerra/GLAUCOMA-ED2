@@ -1,22 +1,22 @@
 ===== RESULTADOS =====
 
 HEAP
-Insercao: 0.001137
-Ordem: 0.005530
-Busca: 0.000001
+Insercao: 0.001099
+Ordem: 0.005467
+Busca: 0.000002
 Comparacoes: 17578
 
 ABB
-Insercao: 0.002212
-Ordem: 0.000232
-Busca: 0.000261
+Insercao: 0.002295
+Ordem: 0.000239
+Busca: 0.000256
 Comparacoes: 10880
 Altura: 25
 
 AVL
-Insercao: 0.007795
-Ordem: 0.000251
-Busca: 0.000139
+Insercao: 0.008005
+Ordem: 0.000242
+Busca: 0.000135
 Comparacoes: 8938
 Altura: 12
 Rotacoes: 688
