@@ -1,4 +1,3 @@
-#AVL
 class NoAVL:
 
     def __init__(self, paciente):
@@ -16,17 +15,21 @@ class AVL:
         self.rotacoes = 0
 
     def altura_no(self, no):
+
         if not no:
             return 0
+
         return no.altura
 
     def fator_balanceamento(self, no):
+
         if not no:
             return 0
 
         return self.altura_no(no.esquerda) - self.altura_no(no.direita)
 
     def rotacao_direita(self, y):
+
         self.rotacoes += 1
 
         x = y.esquerda
@@ -35,12 +38,20 @@ class AVL:
         x.direita = y
         y.esquerda = t2
 
-        y.altura = 1 + max(self.altura_no(y.esquerda), self.altura_no(y.direita))
-        x.altura = 1 + max(self.altura_no(x.esquerda), self.altura_no(x.direita))
+        y.altura = 1 + max(
+            self.altura_no(y.esquerda),
+            self.altura_no(y.direita)
+        )
+
+        x.altura = 1 + max(
+            self.altura_no(x.esquerda),
+            self.altura_no(x.direita)
+        )
 
         return x
 
     def rotacao_esquerda(self, x):
+
         self.rotacoes += 1
 
         y = x.direita
@@ -49,8 +60,15 @@ class AVL:
         y.esquerda = x
         x.direita = t2
 
-        x.altura = 1 + max(self.altura_no(x.esquerda), self.altura_no(x.direita))
-        y.altura = 1 + max(self.altura_no(y.esquerda), self.altura_no(y.direita))
+        x.altura = 1 + max(
+            self.altura_no(x.esquerda),
+            self.altura_no(x.direita)
+        )
+
+        y.altura = 1 + max(
+            self.altura_no(y.esquerda),
+            self.altura_no(y.direita)
+        )
 
         return y
 
@@ -104,6 +122,7 @@ class AVL:
             return no.paciente
 
         res = self._buscar(no.esquerda, nome_imagem)
+
         if res:
             return res
 
@@ -112,14 +131,17 @@ class AVL:
     def altura(self):
         return self.altura_no(self.raiz)
 
-    # 🔥 NOVO
     def listar_ordenado(self):
         resultado = []
         self._em_ordem(self.raiz, resultado)
         return resultado
 
     def _em_ordem(self, no, lista):
+
         if no:
-            self._em_ordem(no.esquerda, lista)
-            lista.append(no.paciente)
+
             self._em_ordem(no.direita, lista)
+
+            lista.append(no.paciente)
+
+            self._em_ordem(no.esquerda, lista)

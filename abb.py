@@ -1,4 +1,3 @@
-#ABB
 class NoABB:
 
     def __init__(self, paciente):
@@ -23,6 +22,7 @@ class ABB:
 
         self.comparacoes += 1
 
+        # Mantém estrutura da árvore (score)
         if paciente.score < no.paciente.score:
             no.esquerda = self._inserir(no.esquerda, paciente)
         else:
@@ -51,6 +51,7 @@ class ABB:
         return self._altura(self.raiz)
 
     def _altura(self, no):
+
         if no is None:
             return 0
 
@@ -59,14 +60,21 @@ class ABB:
             self._altura(no.direita)
         ) + 1
 
-    # 🔥 NOVO: lista ordenada (in-order)
+    # ==================================================
+    # ORDEM CORRETA (IN-ORDER): CRESCENTE DE SCORE
+    # ==================================================
+    # Isso garante que ABB NÃO fique igual ao Heap
+    # ==================================================
+
     def listar_ordenado(self):
         resultado = []
         self._em_ordem(self.raiz, resultado)
         return resultado
 
     def _em_ordem(self, no, lista):
+
         if no:
+            # esquerda → raiz → direita (CORRETO)
             self._em_ordem(no.esquerda, lista)
             lista.append(no.paciente)
             self._em_ordem(no.direita, lista)
