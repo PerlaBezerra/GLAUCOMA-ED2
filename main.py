@@ -205,4 +205,4 @@ with open("resultados.txt", "w", encoding="utf-8") as f:
 
     f.write("\nAVL\n")
     for i, p in enumerate(ordem_avl[:10], 1):
-        f.write(f"{i}. {p.id_imagem} - {p.score} - {classificar_risco(p.score)}\n")
+        f.write(f"{i}. {p.id_imagem} - {p.score} - {classificar_risco(p.score)}\n") 
